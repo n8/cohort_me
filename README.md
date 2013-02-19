@@ -44,11 +44,6 @@ During the week starting on 21 Jan 2013, I had 15 people signup. One week later,
 
 Pretty easy. If you have any trouble let me know on [Twitter](https://twitter.com/natekontny) or email.
 
-<hr/>
-
-<a href="https://inventric.wufoo.com/forms/m7p7a7/" onclick="window.open(this.href,  null, 'height=260, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false">You should get my newsletter here.</a>
-
-<hr/>
 
 
 CohortMe Details
@@ -162,6 +157,4 @@ Feedback
 --------
 [Source code available on Github](https://github.com/n8/cohort_me). Feedback and pull requests are greatly appreciated.  
 
-<hr/>
 
-<iframe height="130" allowTransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none"  src="https://inventric.wufoo.com/embed/m7p7a7/"><a href="https://inventric.wufoo.com/forms/m7p7a7/">Fill out my Wufoo form!</a></iframe>
