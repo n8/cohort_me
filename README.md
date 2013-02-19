@@ -113,7 +113,6 @@ class Users
    end
 end
 ```
-
 5. Do something with @cohorts in your performance view. 
 [Here's code you can use for your performance view](https://raw.github.com/n8/cohort_me/master/lib/cohort_me/_cohort_table.html.erb). It displays a basic cohort analysis table you can play with. 
 
