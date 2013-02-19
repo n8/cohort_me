@@ -24,11 +24,9 @@ module CohortMe
     elsif interval_name == "days"
       start_from = 12.days.ago
       time_conversion = 86400
-      cohort_label = "%Y-%j"
     elsif interval_name == "months"
       start_from = 12.months.ago
       time_conversion = 1.month.seconds
-      cohort_label = "%Y-%b"
     end
 
     cohort_query = activation_class.select("#{activation_table_name}.#{activation_user_id}, MIN(#{activation_table_name}.created_at) as cohort_date").group("#{activation_user_id}").where("created_at > ?", start_from)
@@ -72,9 +70,8 @@ module CohortMe
 
   def self.convert_to_cohort_date(datetime, interval)
     if interval == "weeks"
-      year_and_week = datetime.strftime("%Y-%U").split("-")
-      return Date.commercial(year_and_week[0].to_i, year_and_week[1].to_i + 1)
-
+      return datetime.at_beginning_of_week.to_date
+      
     elsif interval == "days"
       return Date.parse(datetime.strftime("%Y-%m-%d"))
 
