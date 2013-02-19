@@ -4,6 +4,7 @@ module CohortMe
 
   def self.analyze(options={})
 
+    start_from_interval = options[:start_from_interval] || 12
     interval_name = options[:period] || "weeks"
     activation_class = options[:activation_class] 
     activation_table_name = ActiveModel::Naming.plural(activation_class)
