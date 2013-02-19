@@ -3,9 +3,9 @@ require File.expand_path('../lib/cohort_me/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["nate"]
-  gem.email         = ["nate@cityposh.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.email         = ["nate.kontny@gmail.com"]
+  gem.description   = %q{Cohort analysis for a Rails app}
+  gem.summary       = %q{Provides tools to Ruby and Rails developers to perform cohort analysis.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
