@@ -73,7 +73,7 @@ module CohortMe
   def self.convert_to_cohort_date(datetime, interval)
     if interval == "weeks"
       year_and_week = datetime.strftime("%Y-%U").split("-")
-      return Date.commercial(year_and_week[0].to_i, year_and_week[1].to_i + 1)
+      return Date.commercial(year_and_week[0].to_i, year_and_week[1].to_i == 52 ? 52 : year_and_week[1].to_i + 1)
 
     elsif interval == "days"
       return Date.parse(datetime.strftime("%Y-%m-%d"))
