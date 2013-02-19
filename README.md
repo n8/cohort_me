@@ -22,7 +22,7 @@ I got irritated, so I built a simple way to study your Rails app's user retentio
 
 To get a cohort analysis, just use this in your Rails app: 
 
-```
+```ruby
 CohortMe.analyze(activation_class: Document)
 ```
 
@@ -32,7 +32,7 @@ Above is an example of studying user retention for Draft. Users are "activated" 
 
 CohortMe.analyze will spit out a ruby Hash: 
 
-```
+```ruby
 {Mon, 21 Jan 2013=>{:count=>[15, 1, 1, 0], :data=>[#<Document user_id: 5, created_at: "2013-01-22 18:09:15">,
 ```
 
@@ -51,12 +51,12 @@ CohortMe Details
 
 Options you can pass to CohortMe.analyze:
 
-* :period - Default is "weeks". Can also be "months" or "days".
-* :activation_class - The Rails model class that CohortMe will query to find activated users. For example: User. CohortMe will look for a created_at timestamp in this table.
-* :activation_user_id - Default is "user_id". Most Rails models are owned by a User through a "user_id". If it's something else like "owner_id", you can override that here.
-* :activation_conditions - If you need anything fancy to find activated users. For example, if your acivation_class is Document (meaning find activated Users who have created their first Document) you could pass in:  :activation_conditions => ["(content IS NOT NULL && content != '')], which means: Find activated Users who have create their first Document that has non-empty content.
-* :activity_class - Default is the same class used as the activation_class. However, is there a different Class representing an Event the user creates in your database when they revisit your application? Do you expect users to create a new Message each week? Or a new Friend?
-* :activity_user_id - Defaults to "user_id". 
+* `:period` - Default is "weeks". Can also be "months" or "days".
+* `:activation_class` - The Rails model class that CohortMe will query to find activated users. For example: User. CohortMe will look for a created_at timestamp in this table.
+* `:activation_user_id` - Default is "user_id". Most Rails models are owned by a User through a "user_id". If it's something else like "owner_id", you can override that here.
+* `:activation_conditions` - If you need anything fancy to find activated users. For example, if your acivation_class is Document (meaning find activated Users who have created their first Document) you could pass in:  `:activation_conditions => ["(content IS NOT NULL && content != '')]`, which means: Find activated Users who have create their first Document that has non-empty content.
+* `:activity_class` - Default is the same class used as the activation_class. However, is there a different Class representing an Event the user creates in your database when they revisit your application? Do you expect users to create a new Message each week? Or a new Friend?
+* `:activity_user_id` - Defaults to "user_id". 
 
 
 Examples
@@ -70,7 +70,7 @@ Next, figure out what a user does to be classified as "returning". This needs to
 
 For my group messaging tool, my cohort analysis might look like this: 
 
-```
+```ruby
 @cohorts = CohortMe.analyze(period: "months", 
                             activation_class: Group, 
                             activity_class: Message)
@@ -80,7 +80,7 @@ CohortMe will look at Groups to find activated users: people who created their f
 
 This assumes a Group belongs to a user through an attribute called "user_id". But if the attribute is "owner_id" on a Group, that's fine, you can do: 
 
-```
+```ruby
 @cohorts = CohortMe.analyze(period: "months", 
                             activation_class: Group, 
                             activation_user_id: 'owner_id',
@@ -89,7 +89,7 @@ This assumes a Group belongs to a user through an attribute called "user_id". Bu
 
 Here's an example from Draft. It's slightly more complicated because I have guest users, and documents that can be blank from people kicking the tires. I don't want to count those. My cohort analysis looks like this: 
 
-```
+```ruby
 non_guests = User.where("encrypted_password IS NOT NULL AND encrypted_password != ''").all
 @period = "weeks"
 activation_conditions = ["(content IS NOT NULL && content != '') and user_id IN (?)", non_guests]
@@ -103,7 +103,7 @@ Data Returned
 -------------
 The data returned looks like this: 
 
-```
+```ruby
 {cohort date1 => {
     :count=>[integer, smaller integer, smaller integer], 
     :data=>[user event record, user event record]
@@ -118,7 +118,7 @@ Installation
 - Restart your server 
 - Get your cohorts in a controller action. For example:
 
-```
+```ruby
 class Users
    def performance
        @cohorts = CohortMe.analyze(period: "weeks", 
@@ -132,13 +132,13 @@ end
 [Here's code you can use for your view](https://raw.github.com/n8/cohort_me/master/lib/cohort_me/_cohort_table.html.erb). It displays a basic cohort analysis table you can play with. 
 - If you look closely at that table image, you'll notice that the numbers are links. I've tweaked the table in my own app to be able to show me who exactly are those users returning to Draft. You can do the same: 
 
-```
+```erb
 <%= link_to "#{((row[1][:count][i].to_f/start.to_f) * 100.00).round(0)}%", show_users_retention_path(cohort: row[0], period: i) %>
 ```
 
 And I have a Controller action that looks like this: 
 
-```
+```ruby
 class RetentionController < ApplicationController
 
   def show_users
