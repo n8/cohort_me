@@ -48,7 +48,7 @@ module CohortMe
 
     data = activity_class.where("created_at > ?", start_from).select(select_sql).joins("JOIN (" + cohort_query.to_sql + ") AS cohorts ON #{activity_table_name}.#{activity_user_id} = cohorts.#{activation_user_id}")
 
-    unique_data = data.all.uniq{|d| [d.user_id, d.cohort_date, d.periods_out] }
+    unique_data = data.all.uniq{|d| [d.send(activity_user_id), d.cohort_date, d.periods_out] }
 
     analysis = unique_data.group_by{|d| convert_to_cohort_date(Time.parse(d.cohort_date.to_s), interval_name)}
     cohort_hash =  Hash[analysis.sort_by { |cohort, data| cohort }]
