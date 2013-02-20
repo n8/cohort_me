@@ -57,6 +57,7 @@ Options you can pass to CohortMe.analyze:
 * `:activation_conditions` - If you need anything fancy to find activated users. For example, if your acivation_class is Document (meaning find activated Users who have created their first Document) you could pass in:  `:activation_conditions => ["(content IS NOT NULL && content != '')]`, which means: Find activated Users who have create their first Document that has non-empty content.
 * `:activity_class` - Default is the same class used as the activation_class. However, is there a different Class representing an Event the user creates in your database when they revisit your application? Do you expect users to create a new Message each week? Or a new Friend?
 * `:activity_user_id` - Defaults to "user_id". 
+* `:start_from_interval` - Number of periods [days | weeks | months] before today to show the cohort analysis for. Defaults to 12. 
 
 
 Examples
@@ -74,6 +75,15 @@ For my group messaging tool, my cohort analysis might look like this:
 @cohorts = CohortMe.analyze(period: "months", 
                             activation_class: Group, 
                             activity_class: Message)
+```
+
+If I wanted to see this for the past 24 months, the code would look like this:
+
+```ruby
+@cohorts = CohortMe.analyze(period: "months", 
+                            activation_class: Group, 
+                            activity_class: Message,
+                            start_from_interval: 24)
 ```
 
 CohortMe will look at Groups to find activated users: people who created their first Group. Next, CohortMe will look to the Message model to find out when those users have returned to my app to create that Message activity. 
