@@ -1,5 +1,11 @@
 # Cohort analysis - User retention in a Rails application.
 
+<blockquote class="twitter-tweet"><p>@<a href="https://twitter.com/natekontny">natekontny</a> That's a seriously clever idea. Love it.</p>&mdash; Jesse Kriss (@jkriss) <a href="https://twitter.com/jkriss/status/303934644020211712">February 19, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p>Very pragmatic and smart... Cohort analysis - User retention in a Rails application <a href="http://t.co/Ik35t9H4" title="http://edd.me/YEbJ3q">edd.me/YEbJ3q</a></p>&mdash; Edd Dumbill (@edd) <a href="https://twitter.com/edd/status/304002544617811969">February 19, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 I want my actions to be more data-driven. I want to make Dave McClure, Steve Blank, and Eric Ries proud. But, it's easier said than done. 
 
 Analytics are still a pain in the ass. 
