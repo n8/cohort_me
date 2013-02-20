@@ -27,7 +27,7 @@
       <% (@cohorts.size).times do |i| %>
         <td>
           <% if @cohorts.size - index > (i + 1) %>
-            <%= "#{((row[1][i].to_f/start.to_f) * 100.00).round(0)}%" %>
+            <%= "#{((row[1][:count][i].to_f/start.to_f) * 100.00).round(0)}%" %>
           <% else %>
             --
           <% end %>
