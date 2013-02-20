@@ -4,6 +4,7 @@ module CohortMe
 
   def self.analyze(options={})
 
+    start_from_interval = options[:start_from_interval] || 12
     interval_name = options[:period] || "weeks"
     activation_class = options[:activation_class] 
     activation_table_name = ActiveModel::Naming.plural(activation_class)
@@ -19,13 +20,13 @@ module CohortMe
     cohort_label = nil
 
     if interval_name == "weeks"
-      start_from = 12.weeks.ago
+      start_from = start_from_interval.weeks.ago
       time_conversion = 604800
     elsif interval_name == "days"
-      start_from = 12.days.ago
+      start_from = start_from_interval.days.ago
       time_conversion = 86400
     elsif interval_name == "months"
-      start_from = 12.months.ago
+      start_from = start_from_interval.months.ago
       time_conversion = 1.month.seconds
     end
 
