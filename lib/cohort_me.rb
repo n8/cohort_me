@@ -15,6 +15,10 @@ module CohortMe
     activity_table_name = ActiveModel::Naming.plural(activity_class)
     activity_user_id = options[:activity_user_id] || "user_id"
 
+    period_values = %w[weeks days months]
+
+    raise "Period '#{interval_name}' not supported. Supported values are #{period_values.join(' or ')}" unless period_values.include? interval_name
+
     start_from = nil
     time_conversion = nil
     cohort_label = nil
