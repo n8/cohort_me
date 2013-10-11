@@ -43,7 +43,7 @@ module CohortMe
       select_sql = "#{activity_table_name}.#{activity_user_id}, #{activity_table_name}.#{activity_field}, cohort_date, FLOOR(TIMEDIFF(#{activity_table_name}.#{activity_field}, cohort_date)/#{time_conversion}) AS periods_out"
     elsif ActiveRecord::Base.connection.instance_values["config"][:adapter] == "postgresql"
       if interval_name == 'months'
-        select_sql = "#{activity_table_name}.#{activity_user_id}, #{activity_table_name}.#{activity_field}, date_trunc('month', cohort_date) AS cohort_date, EXTRACT(months FROM age(date_trunc('month', #{activity_table_name}.#{activity_field}), date_trunc('month', cohort_date))) AS periods_out"
+        select_sql = "#{activity_table_name}.#{activity_user_id}, #{activity_table_name}.#{activity_field}, date_trunc('month', cohort_date) AS cohort_date, EXTRACT(year FROM age(date_trunc('month', #{activity_table_name}.#{activity_field}), date_trunc('month', cohort_date))) * 12 + EXTRACT(months FROM age(date_trunc('month', #{activity_table_name}.#{activity_field}), date_trunc('month', cohort_date))) AS periods_out"
       else
         select_sql = "#{activity_table_name}.#{activity_user_id}, #{activity_table_name}.#{activity_field}, cohort_date, FLOOR(EXTRACT(epoch FROM (#{activity_table_name}.#{activity_field} - cohort_date))/#{time_conversion}) AS periods_out"
       end
@@ -60,7 +60,8 @@ module CohortMe
     end
 
     analysis = unique_data.group_by{|d| convert_to_cohort_date(Time.parse(d.cohort_date.to_s), interval_name)}
-    cohort_hash = Hash[analysis.sort_by { |cohort, data| cohort }]
+
+    cohort_hash = Hash[analysis.sort_by(&:first)]
 
     table = {}
     cohort_hash.each do |r|
