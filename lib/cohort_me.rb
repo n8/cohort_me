@@ -40,7 +40,7 @@ module CohortMe
       cohort_query = cohort_query.where(activation_conditions)
     end
 
-    if %(mysql mysql2).include?(ActiveRecord::Base.connection.instance_values["config"][:adapter])
+    if %(mysql mysql2 jdbcmysql).include?(ActiveRecord::Base.connection.instance_values["config"][:adapter])
     
       select_sql = "#{activity_table_name}.#{activity_user_id}, #{activity_table_name}.created_at, cohort_date, FLOOR(TIMEDIFF(#{activity_table_name}.created_at, cohort_date)/#{time_conversion}) as periods_out"
     elsif ActiveRecord::Base.connection.instance_values["config"][:adapter] == "postgresql"
