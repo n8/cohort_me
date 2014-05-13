@@ -13,7 +13,7 @@ module CohortMe
 
     activity_class = options[:activity_class] || activation_class
     activity_table_name = ActiveModel::Naming.plural(activity_class)
-    activity_user_id = options[:activity_user_id] || "user_id"
+    activity_user_id = options[:activity_user_id] || activation_user_id
 
     period_values = %w[weeks days months]
 
