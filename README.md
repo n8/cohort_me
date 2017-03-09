@@ -60,7 +60,7 @@ Options you can pass to CohortMe.analyze:
 * `:period` - Default is "weeks". Can also be "months" or "days".
 * `:activation_class` - The Rails model class that CohortMe will query to find activated users. For example: User. CohortMe will look for a created_at timestamp in this table.
 * `:activation_user_id` - Default is "user_id". Most Rails models are owned by a User through a "user_id". If it's something else like "owner_id", you can override that here.
-* `:activation_conditions` - If you need anything fancy to find activated users. For example, if your acivation_class is Document (meaning find activated Users who have created their first Document) you could pass in:  `:activation_conditions => ["(content IS NOT NULL && content != '')]`, which means: Find activated Users who have create their first Document that has non-empty content.
+* `:activation_conditions` - If you need anything fancy to find activated users. For example, if your activation_class is Document (meaning find activated Users who have created their first Document) you could pass in:  `:activation_conditions => ["(content IS NOT NULL && content != '')]`, which means: Find activated Users who have create their first Document that has non-empty content.
 * `:activity_class` - Default is the same class used as the activation_class. However, is there a different Class representing an Event the user creates in your database when they revisit your application? Do you expect users to create a new Message each week? Or a new Friend?
 * `:activity_user_id` - Defaults to "user_id". 
 * `:start_from_interval` - Number of periods [days | weeks | months] before today to show the cohort analysis for. Defaults to 12. 
