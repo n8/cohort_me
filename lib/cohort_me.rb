@@ -15,7 +15,7 @@ module CohortMe
     activity_table_name = ActiveModel::Naming.plural(activity_class)
     activity_user_id = options[:activity_user_id] || "user_id"
 
-    period_values = %w[weeks days months]
+    period_values = %w[weeks days months quarters]
 
     raise "Period '#{interval_name}' not supported. Supported values are #{period_values.join(' or ')}" unless period_values.include? interval_name
 
@@ -32,6 +32,9 @@ module CohortMe
     elsif interval_name == "months"
       start_from = start_from_interval.months.ago
       time_conversion = 1.month.seconds
+    elsif interval_name == "quarters"
+      start_from = (start_from_interval*3).months.ago
+      time_conversion = 3.months.seconds
     end
 
     cohort_query = activation_class.select("#{activation_table_name}.#{activation_user_id}, MIN(#{activation_table_name}.created_at) as cohort_date").group("#{activation_user_id}").where("created_at > ?", start_from)
@@ -82,6 +85,10 @@ module CohortMe
 
     elsif interval == "months"
       return Date.parse(datetime.strftime("%Y-%m-1"))
+      
+    elsif interval == "quarters"
+      return Date.parse(datetime.beginning_of_quarter.strftime("%Y-%m-1"))
+    
     end
   end
 
